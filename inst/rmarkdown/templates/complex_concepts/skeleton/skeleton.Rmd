@@ -44,7 +44,6 @@ var_list <- c()
 ```{r echo=FALSE}
 # Do a bunch of things se we can have nice labels instead 
 # of the variable names on our graph.
-allnames <- get_column_info(GSS_Complex_Concepts)
 column_info <- get_column_info(GSS_Complex_Concepts)
 
 # Notice that here we are using var_list to limit the analysis to the specific variables on the list.
