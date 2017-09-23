@@ -9,14 +9,11 @@ output:
 
 ```{r, echo=FALSE, message=FALSE}
 # Load your libraries here
-
 library('lehmansociology')
 library('dplyr')
-library('tidyr')
 library('likert')
 library('pander')
-library(aws.s3)
-library('ggplot2')
+library('aws.s3')
 
 ```
 
@@ -37,24 +34,22 @@ s3load('GSS_Complex_Concepts.RData', bucket = lehman_bucket)
 #  var_list <- c("concept-measure-1", "concept-measure-2", "concept-measure-3")
 var_list <- c()
 
-#Now when ever you type var_list, it will refer to the list of variables you created.
+# Now, whenever var_list is used, it will refer to the list of variables you created.
 
 ```
 
 ```{r echo=FALSE}
-# Do a bunch of things se we can have nice labels instead 
-# of the variable names on our graph.
+# Do a bunch of things se we can have nice labels instead of short variable names.
+# This section creates a customized data frame that we use to do the analysis.
+
 column_info <- get_column_info(GSS_Complex_Concepts)
 
 # Notice that here we are using var_list to limit the analysis to the specific variables on the list.
 mynames <- get_col_label(column_info, var_list)
 
-```
-
-````{r echo=FALSE}
-
 # Get the actual data for the variables on your list
 myvariables <- dplyr::select(GSS_Complex_Concepts, one_of(var_list))
+
 # Attach the nice labels.
 names(myvariables) <- mynames
 
