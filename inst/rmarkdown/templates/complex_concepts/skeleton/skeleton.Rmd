@@ -1,0 +1,71 @@
+---
+title: "Measuring Complex Concepts"
+author: ''
+output:
+  pdf_document: default
+  html_document: default
+  ioslides_presentation: default
+---
+
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('lehmansociology')
+library('dplyr')
+library('tidyr')
+library('likert')
+library('pander')
+library(aws.s3)
+library('ggplot2')
+
+```
+
+
+````{r echo = FALSE}
+#This next chunk loads the GSS data from S3 storage. The dataset is callee GSS_Complex_Concepts.
+#Whenever the code refers to GSS_Complex_Concepts  it is referring to this data set.  
+
+
+s3load('GSS_Complex_Concepts.RData', bucket = lehman_bucket)
+````
+
+
+```{r  echo = FALSE}
+# Put your list of assigned values in the parentheses.
+# Make sure to put the names in quotation marks and to separate 
+# the names with commas like the example below.
+#  var_list <- c("concept-measure-1", "concept-measure-2", "concept-measure-3")
+var_list <- c()
+
+#Now when ever you type var_list, it will refer to the list of variables you created.
+
+```
+
+```{r echo=FALSE}
+# Do a bunch of things se we can have nice labels instead 
+# of the variable names on our graph.
+allnames <- get_column_info(GSS_Complex_Concepts)
+column_info <- get_column_info(GSS_Complex_Concepts)
+
+# Notice that here we are using var_list to limit the analysis to the specific variables on the list.
+mynames <- get_col_label(column_info, var_list)
+
+```
+
+````{r echo=FALSE}
+
+# Get the actual data for the variables on your list
+myvariables <- dplyr::select(GSS_Complex_Concepts, one_of(var_list))
+# Attach the nice labels.
+names(myvariables) <- mynames
+
+```
+
+
+````{r echo=FALSE}
+likert_myvariables <- likert(myvariables)
+pander(summary(likert_myvariables))
+plot(likert_myvariables)
+
+```
+

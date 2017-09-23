@@ -1,0 +1,85 @@
+---
+title: 'Impact of question wording'
+author: 'My name'
+output:
+  pdf_document: default
+  html_document: default
+  ioslides_presentation: default
+---
+
+
+ 
+```{r, echo=FALSE, message=FALSE}
+# For this lab everywhere you see VAR1 you should replace 
+# it with the name of your first variable.
+# Everywhere you see VAR2 replace it with the name of your second variable.
+# This will be in 3 places for each variable
+
+# Load your libraries here
+library('lehmansociology')
+library('asw.s3')
+library('pander')
+
+s3load('GSS_Complex_Concepts.RData', bucket = lehman_bucket)
+
+colinfo <- get_column_info(GSS_Nat_variables)
+```
+## Frequency distribution of base version
+
+Wording: `r get_col_label(colinfo, "VAR1") `
+```{r  echo=FALSE}
+# Put your first variable name after the $, replacing VAR1.  Make sure to use all capitals
+pretty_freq(frequency(GSS_Nat_variables$VAR1))
+
+```
+
+
+```{r  echo=FALSE}
+ set.alignment('left')
+# Put your first variable name after the $, replacing VAR1.  Make sure to use all capitals
+pretty_freq(frequency(GSS_Nat_variables$VAR2))
+
+```
+
+## Frequency distribution of version Y
+
+Wording: `r get_col_label(colinfo, "VAR2"") `
+```{r echo=FALSE}
+set.alignment('left')
+#Put your second variable after the $, replacing VAR2.
+pretty_freq(frequency(GSS_Nat_variables$VAR2))
+
+```
+
+## Visualization 
+
+```{r echo=FALSE}
+# Create a data set with just my variables. Replace VAR1 and VAR2 with your variable names.
+my_variables<-dplyr::select_(GSS_Nat_variables, VAR1, VAR2) 
+```
+
+```{r  echo=FALSE}
+
+# Pre process the data for making the graph
+# Create one column where the variable is the wording and another when it is the 
+# answer given to the wording used. 
+varg<-tidyr::gather(my_variables, key=Question, value = Answer )
+# Drop missing values
+varg <- dplyr::filter(varg, Answer != "NA")
+# Make sure the ordering of answers is correct
+varg$Answer<- ordered(varg$Answer, levels = c("Too little", "About right", "Too much"))
+
+library('scales')
+library('ggplot2')
+
+# Add a title below between the quotation marks in ggtitle("")
+# You can also change the colors to "Reds", "Greens" etc.
+
+ggplot(varg, aes(x=Question, fill=Answer)) + 
+  geom_bar(stat="count", position = "fill") +
+  scale_y_continuous(labels = percent_format()) +
+  ylab("Percent") +
+ scale_fill_brewer(palette = "Blues") +
+  ggtitle("")
+
+```
