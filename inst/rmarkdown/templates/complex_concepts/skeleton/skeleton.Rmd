@@ -55,15 +55,30 @@ year
 ```{r echo=FALSE}
 
 # Make a smaller data set with just the variables on your list and filtering for your year. 
-myvariables <- dplyr::select(GSS_Complex_Concepts, one_of(var_list)) %>% filter(YEAR == year)
+myvariables <- GSS_Complex_Concepts %>% 
+                 filter(YEAR == year) %>% 
+                 select(GSS_Complex_Concepts, one_of(var_list)) 
 
 ```
 
+```{r echo=FALSE}
+
+# Make a smaller data set with just the variables on your list and filtering for your year. 
+myvariables <- GSS_Complex_Concepts %>% 
+  dplyr::filter(YEAR == year) %>% 
+  dplyr::select(one_of(var_list)) 
+
+```
+
+-----
 
 ```{r echo=FALSE}
 likert_myvariables <- likert(myvariables)
-pander(summary(likert_myvariables))
 plot(likert_myvariables)
-
 ```
 
+----
+```{r}
+
+pander(summary(likert_myvariables))
+```

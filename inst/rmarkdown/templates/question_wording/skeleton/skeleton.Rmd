@@ -51,7 +51,7 @@ Wording: `r get_col_label(colinfo, "VAR3")
 
 ```{r  echo=FALSE}
  set.alignment('left')
-# Put your second variable name after the $, replacing VAR3.  Make sure to use all capitals
+# Put your third variable name after the $, replacing VAR3.  Make sure to use all capitals
 pretty_freq(frequency(GSS_Nat_variables$VAR3))
 
 ```
