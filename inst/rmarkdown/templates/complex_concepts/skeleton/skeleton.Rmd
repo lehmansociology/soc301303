@@ -18,13 +18,13 @@ library('aws.s3')
 ```
 
 
-````{r echo = FALSE}
+```{r echo = FALSE}
 #This next chunk loads the GSS data from S3 storage. The dataset is callee GSS_Complex_Concepts.
 #Whenever the code refers to GSS_Complex_Concepts  it is referring to this data set.  
 
 
 s3load('GSS_Complex_Concepts.RData', bucket = lehman_bucket)
-````
+```
 
 
 ```{r  echo = FALSE}
@@ -32,31 +32,35 @@ s3load('GSS_Complex_Concepts.RData', bucket = lehman_bucket)
 # Make sure to put the names in quotation marks and to separate 
 # the names with commas like the example below.
 #  var_list <- c("concept-measure-1", "concept-measure-2", "concept-measure-3")
+# Warning; Make sure that your names match exactly including if they are in upper case or lower case!
+
 var_list <- c()
 
 # Now, whenever var_list is used, it will refer to the list of variables you created.
 
+# Now assign the year for your data to a variable called year.
+year <- PUT_YOUR_YEAR_HERE
+```
+
+My variables: 
+
+```{r echo=FALSE}
+var_list
+```
+My year:
+```{r}
+year
 ```
 
 ```{r echo=FALSE}
-# Do a bunch of things se we can have nice labels instead of short variable names.
-# This section creates a customized data frame that we use to do the analysis.
 
-column_info <- get_column_info(GSS_Complex_Concepts)
-
-# Notice that here we are using var_list to limit the analysis to the specific variables on the list.
-mynames <- get_col_label(column_info, var_list)
-
-# Get the actual data for the variables on your list
-myvariables <- dplyr::select(GSS_Complex_Concepts, one_of(var_list))
-
-# Attach the nice labels.
-names(myvariables) <- mynames
+# Make a smaller data set with just the variables on your list and filtering for your year. 
+myvariables <- dplyr::select(GSS_Complex_Concepts, one_of(var_list)) %>% filter(YEAR == year)
 
 ```
 
 
-````{r echo=FALSE}
+```{r echo=FALSE}
 likert_myvariables <- likert(myvariables)
 pander(summary(likert_myvariables))
 plot(likert_myvariables)

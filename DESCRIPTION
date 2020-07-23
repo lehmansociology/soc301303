@@ -1,12 +1,12 @@
 Package: soc301303
 Type: Package
 Title: Materials for Soc 301 and 303
-Version: 0.1.0
+Version: 0.1.2
 Author: person("Elin", "Waring", email="elin.waring@gmail.com", role = "aut", "cre")
 Maintainer: Elin Waring <elin.waring@gmail.com>
 Description: 
-    This package includes supporting materials for Leham SOC 301 and SOC 303.
-License: TBD
+    Supporting materials for Leham SOC 301 and SOC 303.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
