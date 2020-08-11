@@ -28,6 +28,7 @@ s3load('GSS_Complex_Concepts.RData', bucket = lehman_bucket)
 
 
 ```{r  echo = FALSE}
+
 # Put your list of assigned values in the parentheses.
 # Make sure to put the names in quotation marks and to separate 
 # the names with commas like the example below.
